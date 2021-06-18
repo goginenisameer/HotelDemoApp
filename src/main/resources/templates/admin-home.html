@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Reference Google fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Oswald:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+
+	<!-- Reference Bootstrap and local files -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		
+	<link rel="stylesheet" th:href="@{css/slick.css}">
+	<link rel="stylesheet" th:href="@{css/slick-theme.css}">
+	<link rel="stylesheet" th:href="@{css/home.css}">
+	<link rel="stylesheet" th:href="@{css/your-reservations.css}">
+	<link rel="icon" th:href="@{images/header/white-logo.png}">
+
+	<title>Admin Home</title>
+</head>
+
+<body>
+
+<div class="main-overlay js-main-overlay"></div>
+
+	<!-- Main Cover Section -->
+	<section class="cover-main" id="home">
+		<header>
+			<nav class="nav-wrapper">
+				<div class="logo">
+					<a th:href="@{/}"> <img th:src="@{images/header/white-logo.png}" class="logo">
+					</a>
+				</div>
+			</nav>
+			<div class="menu-trigger js-menu-trigger"></div>
+		</header>
+		
+		
+		<!-- Main buttons and title -->		
+		<div class="wrapper">
+			<ul id="scene" data-invert-x="false" data-invert-y="false" data-scalar-x="7" data-scalar-y="7"
+				data-friction-x="0.1" data-friction-y="0.1" data-origin-x="0.5" data-origin-y="0.5">
+				<li class="layer btn btn-main" data-depth="0.30">
+					<a th:href="@{/create-hotel}" class="back-btn">create Hotel</a></li>
+				<li class="layer btn btn-main" data-depth="0.30">
+					<a th:href="@{/}" class="back-btn">Back Home</a></li>
+			</ul>
+		</div>
+	</section>
+	
+	
+<!-- Reservations Table Section -->
+	<section class="container">
+		<h2 class="sub-title" id="user-res">User Reservations</h2>
+		<h2 class="re-lis-h2">Reservation List</h2>
+
+		<table class="table table-bordered table-responsive-lg" id="res-table">
+			
+			<!-- thead Table elements -->
+			<thead class="thead-dark">
+				<tr>
+					<th>Res ID</th>
+					<th>HotelName</th>
+					<th>Room</th>
+					<th>Rooms</th>
+					<th>Persons</th>
+					<th>Children</th>
+					<th>Open Buffet</th>
+					<th>Stay Period</th>
+					<th>Arrival Date</th>
+					<th>Total Price</th>
+					<th>Status</th>
+					<th>Action</th>
+
+				</tr>
+			</thead>
+
+			<!-- loop in each reservation in list and fill table -->
+			<tbody>
+				<tr th:each=" tempRes : ${resList}">
+					<td style="text-align: center; vertical-align: middle;" th:text="${tempRes.id}" />
+					<td style="text-align: center; vertical-align: middle;" th:text="${tempRes.hotelName}" />
+					<td style="text-align: center; vertical-align: middle;" th:text="${tempRes.room}" />
+					<td style="text-align: center; vertical-align: middle;" th:text="${tempRes.rooms}" />
+					<td style="text-align: center; vertical-align: middle;" th:text="${tempRes.persons}" />
+					<td style="text-align: center; vertical-align: middle;" th:text="${tempRes.children}" />
+					<td style="text-align: center; vertical-align: middle;" th:text="${tempRes.openBuffet}" />
+					<td style="text-align: center; vertical-align: middle;" th:text="${tempRes.stayDays}" />
+					<td style="text-align: center; vertical-align: middle;" th:text="${tempRes.arrivalDate}"
+						id="arr_str" />
+					<td style="text-align: center; vertical-align: middle;" th:text="${tempRes.price}" />
+					<td style="text-align: center; vertical-align: middle;" th:text="${tempRes.status}" />
+					<td>
+						
+
+							<div class="col-small">
+								<form th:action="@{/reservation-delete}" method="POST">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								
+									<input type="hidden" name="resId" th:value="${tempRes.id}" />
+									<button type="submit" class="btn btn-danger btn-lg"
+										onclick="if (!(confirm('Are you sure you want to delete this Reservation?'))) return false">
+										Delete</button>
+								</form>
+							</div>
+					
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</section>
+
+<!-- Reservations Table Section -->
+	<section class="container">
+		<h2 class="sub-title" id="user-res">Hotels List</h2>
+        
+		<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Enter Location" title="Type in a location"><br>
+		
+		<table class="table table-bordered table-responsive-lg" id="res-table">
+			
+			<!-- thead Table elements -->
+			<thead class="thead-dark">
+				<tr>
+					<th>Hotel ID</th>
+					<th>Hotel Name</th>
+					<th>Hotel Categorey</th>
+					<th>Hotel Description</th>
+					<th>Hotel Location</th>
+					<th>Hotel Price</th>
+					<th> </th>
+				</tr>
+			</thead>
+
+			<!-- loop in each reservation in list and fill table -->
+			<tbody>
+				<tr th:each=" tempHotel : ${allHotels}">
+					<td style="text-align: center; vertical-align: middle;" th:text="${tempHotel.hotelId}" />
+					<td style="text-align: center; vertical-align: middle;" th:text="${tempHotel.hotelName}" />
+					<td style="text-align: center; vertical-align: middle;" th:text="${tempHotel.hotelCategory}" />
+					<td style="text-align: center; vertical-align: middle;" th:text="${tempHotel.hotelDesc}" />
+					<td style="text-align: center; vertical-align: middle;" th:text="${tempHotel.hotelLocation}" />
+					<td style="text-align: center; vertical-align: middle;" th:text="${tempHotel.hotelPrice}" />
+					<td>
+
+							<div class="col-small">
+								<form th:action="@{/delete-hotel}" method="POST">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								
+									<input type="hidden" name="hotelId" th:value="${tempHotel.hotelId}" />
+									<button type="submit" class="btn btn-danger btn-lg"
+										onclick="if (!(confirm('Are you sure you want to Delete this Hotel?'))) return false">
+										DELETE</button>
+								</form>
+							</div>
+						
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+       
+	</section>
+
+	<!-- Reference Javascript and local files -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js"></script>
+
+	<script th:src="@{scripts/parallax.min.js}"></script>
+	<script th:src="@{scripts/slick.min.js}"></script>
+	<script th:src="@{scripts/reservation.js}"></script>
+</body>
+
+</html>

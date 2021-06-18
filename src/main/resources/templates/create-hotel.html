@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Reference Google fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Oswald:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+
+	<!-- Reference Bootstrap and local files -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<link rel="stylesheet" th:href="@{css/slick.css}">
+	<link rel="stylesheet" th:href="@{css/slick-theme.css}">
+	<link rel="stylesheet" th:href="@{css/reservation.css}">
+	<link rel="icon" th:href="@{images/header/white-logo.png}">
+
+	<title>Hotel</title>
+</head>
+
+<body>
+
+	<div class="main-overlay js-main-overlay"></div>
+
+	<!-- Main Cover Section -->
+	<section class="cover-main" id="home">
+		<header>
+			<nav class="nav-wrapper">
+				<div class="logo">
+					<a th:href="@{/}"> <img th:src="@{images/header/white-logo.png}" class="logo">
+					</a>
+				</div>
+
+			
+			</nav>
+			<div class="menu-trigger js-menu-trigger"></div>
+		</header>
+
+		<!-- Main buttons and title -->
+		<div class="wrapper">
+			<ul id="scene" data-invert-x="false" data-invert-y="false" data-scalar-x="7" data-scalar-y="7"
+				data-friction-x="0.1" data-friction-y="0.1" data-origin-x="0.5" data-origin-y="0.5">
+				<li class="layer name" data-depth="0.90">Hotel Creation</li>
+				<li class="layer btn btn-main" data-depth="0.30"> <br> <a th:href="@{/}" class="back-btn">Back
+						Home</a></li>
+			</ul>
+		</div>
+	</section>
+
+	<!-- Hotel Booking Section -->
+	<div class="container">
+		<h2 class="sub-title" id="book">Hotel</h2>
+		<div class="hotel_reserve_box card">
+			<h3>creating Form</h3>
+			<br>
+
+			<!-- Reservation form -->
+			<form id="resForm" name="resForm" th:action="@{/save-hotel}" th:object="${hotel}" method="POST">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				
+			   <div class="form-group">
+					<label>Hotel Name:</label> <input class="form-control prc" id="hotel-name" th:field="*{hotelName}" 
+					placeholder="Enter Name" required="required"/>
+				</div>
+				
+				
+				
+				<div class="form-group">
+					<label>Hotel Description</label> <input class="form-control prc" id="hotel-desc" th:field="*{hotelDesc}"
+						placeholder="Enter Description"   required />
+				</div>
+
+				<div class="form-group">
+					<label>Hotel Location</label> <input class="form-control prc" id="hotel-loc" th:field="*{hotelLocation}"
+						placeholder="Enter Location"   required />
+				</div>
+
+				<div class="form-group">
+					<label>Hotel Category</label> <input class="form-control prc" id="hotel-cat" th:field="*{hotelCategory}"
+						placeholder="Enter Category"   required />
+				</div>
+		
+				
+				<div class="form-group">
+					<label>Hotel Price</label> <input class="form-control prc" id="hotel-price"
+						placeholder="Enter Price" type="number" pattern="^(?:[0-9]|[1-4][0-9]|50)$"
+						th:field="*{hotelPrice}" required />
+				</div>
+
+				<!-- <div class="form-group">
+					<label>Select Picture</label> 
+					<input type="image" class="form-control prc" id="hotel-img" th:field="*{images}"  required />
+				</div> 
+				 -->
+
+				<!-- submit form -->
+				<button class="sub-btn">Submit</button>
+			</form>
+		</div>
+	</div>
+
+	
+
+	<!-- Reference Javascript and local files -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js"></script>
+
+	<script th:src="@{scripts/reservation.js}"></script>
+	<script th:src="@{scripts/cost.js}"></script>
+
+</body>
+
+</html>
